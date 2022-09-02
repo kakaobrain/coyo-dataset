@@ -27,7 +27,7 @@
   ```
 * Download metadata and upload it to Google Cloud Storage
   ```
-  for i in {00000..00127}; do wget https://huggingface.co/datasets/kakaobrain/coyo-700m/blob/main/data/part-$i-17da4908-939c-46e5-91d0-15f256041956-c000.snappy.parquet -O - | gsutil cp - gs://${YOUR_GS_BUCKET}/dataset/coyo-700m/parquet/part-$i-17da4908-939c-46e5-91d0-15f256041956-c000.snappy.parquet; done
+  for i in {00000..00127}; do wget https://huggingface.co/datasets/kakaobrain/coyo-700m/resolve/main/data/part-$i-17da4908-939c-46e5-91d0-15f256041956-c000.snappy.parquet -O - | gsutil cp - gs://${YOUR_GS_BUCKET}/dataset/coyo-700m/parquet/part-$i-17da4908-939c-46e5-91d0-15f256041956-c000.snappy.parquet; done
   ```
 * Create Dataproc Cluster
     ```bash
@@ -69,7 +69,7 @@
         --resize_only_if_bigger=True \
         --resize_mode="keep_ratio" \
         --skip_reencode=True \
-        --save_additional_columns='["clip_vitb32_similarity","clip_vitl14_similarity","nsfw_score_opennsfw2","nsfw_score_gantman","watermark_score","aesthetic_score_laion_v2"]' \
+        --save_additional_columns='["clip_similarity_vitb32","clip_similarity_vitl14","nsfw_score_opennsfw2","nsfw_score_gantman","watermark_score","aesthetic_score_laion_v2"]' \
         --enable_wandb=False
     ```
     * For a detailed description of the arguments, see [img2dataset#API](https://github.com/rom1504/img2dataset#api).

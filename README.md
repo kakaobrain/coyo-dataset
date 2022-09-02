@@ -30,42 +30,44 @@ The following figure outlines our data collection procedure.
 
 ## Data Filtering
 ### Image Level
-* Include all image formats that Pillow library can decode (JPEG, WEBP, PNG, BMP, ...)
-* Less than 5KB image size are dropped
-* Images with an aspect ratio greater than 3.0 are dropped
-* Images with min(width, height) < 200 are dropped
-* Images are dropped if the score of [OpenNSFW2](https://github.com/bhky/opennsfw2) or [GantMan/NSFW](https://github.com/GantMan/nsfw_model) is higher than 0.5
-* Based on the image [pHash](http://www.phash.org/) value, we removed all duplicate images from external public datasets.
+* Included all image formats that [Pillow library](https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html) can decode. (JPEG, WEBP, PNG, BMP, ...)
+* Removed images less than 5KB image size.
+* Removed images with an aspect ratio greater than 3.0.
+* Removed images with min(width, height) < 200.
+* Removed images with a score of [OpenNSFW2](https://github.com/bhky/opennsfw2) or [GantMan/NSFW](https://github.com/GantMan/nsfw_model) higher than 0.5.
+* Removed all duplicate images based on the image [pHash](http://www.phash.org/) value from external public datasets.
     * ImageNet-1K/21K, Flickr-30K, MS-COCO, CC-3M, CC-12M
 
 
 ### Text Level
-* We collected only English text using [cld3](https://github.com/google/cld3)
-* Consecutive whitespace characters are replaced with a single whitespace and whitespace before and after the sentence are removed
+* Collected only English text using [cld3](https://github.com/google/cld3).
+* Replaced consecutive whitespace characters with a single whitespace and removed the whitespace before and after the sentence.
     * e.g. `"\n            \n                Load image into Gallery viewer, valentine&amp;#39;s day roses\n            \n" → "Load image into Gallery viewer, valentine&amp;#39;s day roses"`
-* Any text with a length of 5 or less has been dropped
-* Text that does not have a noun form has been dropped
-* Text less than 3 words or more than 256 words and text over 1000 words were dropped
-* All texts appearing more than 10 times have been dropped
+* Removed texts with a length of 5 or less.
+* Removed texts that do not have a noun form.
+* Removed texts with less than 3 words or more than 256 words and texts over 1000 in length.
+* Removed texts appearing more than 10 times.
     * e.g. `“thumbnail for”, “image for”, “picture of”`
-* We dropped data containing NSFW words.
-  * [profanity_filter](https://github.com/rominf/profanity-filter/blob/master/profanity_filter/data/en_profane_words.txt), [better_profanity](https://github.com/snguyenthanh/better_profanity/blob/master/better_profanity/profanity_wordlist.txt), [google_twunter_lol](https://gist.github.com/ryanlewis/a37739d710ccdb4b406d)
+* Removed texts containing NSFW words collected from [profanity_filter](https://github.com/rominf/profanity-filter/blob/master/profanity_filter/data/en_profane_words.txt), [better_profanity](https://github.com/snguyenthanh/better_profanity/blob/master/better_profanity/profanity_wordlist.txt), and [google_twunter_lol](https://gist.github.com/ryanlewis/a37739d710ccdb4b406d).
 
 
 ### Image-Text Level
-* Based on (image_phash, text), duplicated samples have been dropped
+* Removed duplicated samples based on (image_phash, text).
     * Different text may exist for the same image URL.
 
 
 ## Dataset Preview
-| id            | url                                                                                                                                                                 | text                                                                                                                                                                               | width | height | image_phash      | text_length | word_count | num_tokens_bert | num_tokens_gpt | num_faces | clip_similarity_vitb32 | clip_similarity_vitl14 | nsfw_score_opennsfw2 | nsfw_score_gantman | watermark_score | aesthetic_score_laion_v2 |
+| id            | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; url &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | text                                                                                                                                                                               | width | height | image_phash      | text_length | word_count | num_tokens_bert | num_tokens_gpt | num_faces | clip_similarity_vitb32 | clip_similarity_vitl14 | nsfw_score_opennsfw2 | nsfw_score_gantman | watermark_score | aesthetic_score_laion_v2 |
 |---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|--------|------------------|-------------|------------|-----------------|----------------|-----------|------------------------|------------------------|----------------------|--------------------|-----------------|--------------------------|
 | 2559800550877 | <img src="https://artusa.com/files/store/product/phillipsfuelstatecritical.jpg" width="400"/>                                                                       | William Phillips - Fuel State Critical - Outcome in Doubt (B-25                                                                                                                    | 600   | 300    | e9e90c24f1d9c674 | 63          | 10         | 14              | 18             | 0         | 0.300293               | 0.258545               | 0.000364065          | 0.0101354          | 0.0191545       | 7.1703                   |
 | 4896263451343 | <img src="https://cdn.shopify.com/s/files/1/0190/8574/products/Art_Riley-Monterey_Fishing_Fleet_1_grande.jpg?v=1479962684" width="400" />                           | Fishing Fleet (Monterey), California art by Art Riley. HD giclee art prints for sale at CaliforniaWatercolor.com - original California paintings, & premium giclee prints for sale | 600   | 447    | bac58374982e0fc7 | 178         | 25         | 39              | 40             | 0         | 0.319336               | 0.248169               | 2.54512e-05          | 0.0293861          | 0.0406009       | 7.04812                  |
 | 1425929344479 | <img src="https://www.ephotozine.com/resize/2018/07/xlrg/121543_1518912380.jpg?RTUdGk5cXyJFBQgJVANtcQlnYF8JERFaGwJRNQh6SlYUAEw1cmsCdg1hAWoxXFNGLSI=" width="400" /> | The Gate by Pete2453                                                                                                                                                               | 600   | 347    | 8374726575bc0f8a | 20          | 4          | 6               | 6              | 0         | 0.24939                | 0.203735               | 6.97374e-06          | 0.00823276         | 0.0721415       | 6.98521                  |
 | 7456063527931 | <img src="https://www.boredart.com//wp-content/uploads/2014/06/Beautiful-Pictures-From-the-Shores-of-the-Mythical-Land-421.jpg" width="400" />                      | Beautiful Pictures From the Shores of the Mythical Land (42                                                                                                                        | 600   | 320    | 949d1fe559e2cc90 | 59          | 10         | 11              | 14             | 0         | 0.290771               | 0.179321               | 0.0130615            | 0.0178628          | 0.489642        | 6.94643                  |
 | 3221225511175 | <img src="https://homesfeed.com/wp-content/uploads/2017/12/contemporary-expensive-lighting-fixtures-with-minimum-lighting.jpg" width="400" />                       | contemporary expensive lighting fixtures with minimum lighting                                                                                                                     | 800   | 499    | e5ea35075ab912c6 | 62          | 7          | 7               | 8              | 0         | 0.263916               | 0.217896               | 0.000990868          | 0.0137114          | 0.0960748       | 4.57594                  |
-| 4191888300802 | https://img.youtube.com/vi/G5t8RZ1ThcU/0.jpg                                                                                                                        | Himmel und Huhn - Ace in Action                                                                                                                                                    | 480   | 360    | d0693e966993ce61 | 31          | 6          | 9               | 10             | 1         | 0.183105               | 0.172607               | 0.0121689            | 0.0402696          | 0.360724        | 4.0938                   |
+| 5626407855002 | <img src="https://api.time.com/wp-content/uploads/2015/03/168951187.jpg" width="400" />                                                                             | Nintendo Co.'s Super Mario is displayed on coffee mugs for sale at the Nintendo World store in New York, U.S., on Friday, May 17, 2013.                                                | 2000   | 1309    | 9311891e9437f4f3 | 135          | 27          |                37              | 35             | 0         | 0.400878                | 0.316650                | 0.00362968            | 0.0317519          | 0.0022693      | 6.324910                  |
+| 1125282207474 | <img src="https://s.yimg.com/ny/api/res/1.2/mOZe9uKtwugmPrqeXBlxFg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTYzMA--/https://s.yimg.com/uu/api/res/1.2/JuTSVK74cI8II09Q75uzGA--~B/aD01MjU7dz04MDA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/reuters.com/15941d3b47960da80f8033f4ddf9da64" width="400" />                                                                                           | FILE PHOTO: A rainbow appears on the Auckland skyline featuring Sky Tower in New Zealand                                                                                                                 | 800   | 525    | 85b89c0166ee63be | 88          | 15          |                16              | 16             | 0         | 0.4453125               | 0.3505859               | 2.640485e-05          | 0.012074         | 0.0219129       | 5.294523                  |
+| 1434519186493 | <img src="https://static.straitstimes.com.sg/s3fs-public/styles/article_pictrure_780x520_/public/articles/2013/07/24/CHINA24e_2x.jpg?itok=6ppRPBJs&timestamp=1436931188" width="400" />                                                                                           | A man covers himself with algae as he poses for photographs on a beach in Qingdao, Shandong province on Tuesday, July 23, 2013. -- FILE PHOTO: REUTERS                                                                                                                 | 860   | 573    | f2c48dabbf93810a | 150          | 26          |                35              | 36             | 7         | 0.4165039               | 0.3427734               | 0.025009          | 0.01608         | 0.072775       | 6.833739                  |
+
 
 
 ## Dataset Numbers
@@ -102,13 +104,13 @@ The following figure outlines our data collection procedure.
 
 
 ### Statistics
-* Statistics for numeric and string columns
+* Statistics for numeric columns
 
   |      |  width | height | text_length | word_count | num_tokens_bert | num_tokens_gpt | num_faces |
-  |------|-------:|-------:|------------:|-----------:|----------------:|---------------:|----------:|
+  |-----:|-------:|-------:|------------:|-----------:|----------------:|---------------:|----------:|
   | mean | 621.78 | 540.99 |       68.53 |      11.13 |           15.75 |          17.24 |      0.60 |
-  | min  |    200 |    200 |           6 |          3 |               1 |              3 |         0 |
-  | max  |  21449 |  22507 |        1000 |        323 |             811 |           1523 |       736 |
+  |  min |    200 |    200 |           6 |          3 |               1 |              3 |         0 |
+  |  max |  21449 |  22507 |        1000 |        323 |             811 |           1523 |       736 |
 
   |      | watermark_score | clip_similarity_vitb32 | clip_similarity_vitl14 | aesthetic_score_laion_v2 | nsfw_score_opennsfw2 |
   |-----:|----------------:|-----------------------:|-----------------------:|-------------------------:|---------------------:|
@@ -126,12 +128,14 @@ The following figure outlines our data collection procedure.
   ![img.png](assets/statistics_watermark.png)
 * Aesthetic score
   ![img.png](assets/statistics_aesthetic.png)
+* Number of faces
+  ![img.png](assets/statistics_faces.png)
 * For more detailed statistics on COYO-700M, please see the [Data Studio report on COYO-700M](https://datastudio.google.com/s/jvwkG5XCzYI).
 
 
 ## Getting Started
 ### Download
-* You can download the dataset from [Huggingface Dataset](https://huggingface.co/datasets/kakaobrain/coyo-700m)
+* You can download the dataset from [Huggingface Dataset](https://huggingface.co/datasets/kakaobrain/coyo-700m).
 * For more information on downloading the image dataset, please refer to [download/README.md](./download/README.md).
 
 ### Usage
@@ -140,12 +144,11 @@ The following figure outlines our data collection procedure.
 
 
 ## Experiments
-We empirically validated the quality of COYO dataset by re-implementing popular models including [ALIGN](https://arxiv.org/abs/2102.05918), [unCLIP](https://arxiv.org/abs/2204.06125), and [ViT](https://arxiv.org/abs/2010.11929). 
+We empirically validated the quality of COYO dataset by re-implementing popular models such as [ALIGN](https://arxiv.org/abs/2102.05918), [unCLIP](https://arxiv.org/abs/2204.06125), and [ViT](https://arxiv.org/abs/2010.11929). 
 We trained these models on COYO-700M or its subsets from scratch, 
 achieving competitive performance to the reported numbers or generated samples in the original papers. 
-Since this observation supports the high quality of our dataset, we expect that this will be continuously updated in open collaboration.
-We plan to release a pre-trained model and training code.
-For more detailed training methods, please refer to the technical paper to be released later.
+Since this observation supports the high quality of our dataset, we hope it to be continuously updated with open collaboration.
+Our pre-trained models and training codes will be released soon along with the technical report.
 
 ### ALIGN 
 | Model                       | Data       | ImageNet KNN |   COCO I2T |   COCO T2I |
@@ -157,11 +160,13 @@ For more detailed training methods, please refer to the technical paper to be re
 
 ### unCLIP ([OpenAI DALL·E 2](https://openai.com/dall-e-2/))
 
-| <div style="width:150px"><img src=./assets/dalle2_knight.png width=80% height=80%></div> | <div style="width:150px"><img src=./assets/dalle2_andywarhol.png width=80% height=80%></div> | 
-|:----------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------:| 
-| A high quality picture of a medieval knight with golden armor                            | A person with the head of a cat in the style of Andy Warhol<tr></tr>                         |
-| <img src=./assets/dalle2_astronaut.png width=80% height=80%>                             | <img src=./assets/dalle2_darthvader.png width=80% height=80%><tr></tr>                       |  
-| A pencil drawing of an astronaut riding a horse                                          | Goryeo celadon in the shape of darth vader                                                   |
+| <div style="width:150px"><img src=./assets/dalle2_knight.png width=80% height=80%></div>    | <div style="width:150px"><img src=./assets/dalle2_andywarhol.png width=80% height=80%></div> | 
+|:-------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------:| 
+| A high quality picture of a medieval knight with golden armor                               | A person with the head of a cat in the style of Andy Warhol<tr></tr>                         |
+
+| <div style="width:150px"><img src=./assets/dalle2_astronaut.png width=80% height=80%></div> | <div style="width:150px"><img src=./assets/dalle2_darthvader.png width=80% height=80%></div> |  
+|:-------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------:|
+| A pencil drawing of an astronaut riding a horse                                             | Goryeo celadon in the shape of darth vader                                                   |
 
 * We implemented the smaller version of unCLIP to validate the effectiveness of COYO for the text-conditional generation tasks. 
 * Specifically, we tried to reproduce three components of the original [unCLIP](https://arxiv.org/abs/2204.06125): diffusion-based prior, decoder with some modifications, and super-resolution model for upscaling 64x64 into 256x256px.
