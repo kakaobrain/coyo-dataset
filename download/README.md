@@ -53,7 +53,7 @@
 * Run/Submit PySpark Job
     ```bash
     gcloud dataproc jobs submit pyspark --cluster=coyo-700m dataproc-img2dataset.py -- \
-        --url_list=gcs://${YOUR_GS_BUCKET}/dataset/coyo-700m/parquet/ \
+        --url_list=gcs://${YOUR_GS_BUCKET}/dataset/coyo-700m/parquet \
         --input_format="parquet" \
         --url_col="url" \
         --caption_col="text" \
