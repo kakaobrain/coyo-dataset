@@ -193,7 +193,7 @@ If you apply this dataset to any project and research, please cite our code:
 ```
 @misc{kakaobrain2022coyo-700m,
   title         = {COYO-700M: Image-Text Pair Dataset},
-  author        = {Minwoo Byeon, Beomhee Park, Haecheon Kim, Sungjun Lee, Woonhyuk Baek, Saehoon Kim},
+  author        = {Byeon, Minwoo and Park, Beomhee and Kim, Haecheon and Lee, Sungjun and Baek, Woonhyuk and Kim, Saehoon},
   year          = {2022},
   howpublished  = {\url{https://github.com/kakaobrain/coyo-dataset}},
 }
