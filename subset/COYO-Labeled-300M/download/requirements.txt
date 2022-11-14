@@ -1,0 +1,4 @@
+tensorflow_datasets==4.5.0
+gcsfs
+tensorflow
+tensorflow_io
