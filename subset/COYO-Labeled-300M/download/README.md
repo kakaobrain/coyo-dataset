@@ -1,6 +1,5 @@
 # Notice
-Since official img2dataset library doesn't support list of integer or float attribute in tfrecord, we now use custom img2dataset library.  
-We are waiting for accepting pull request and will notice as soon as it is updated.
+Official img2dataset library support list of integer of float attribute in tfrecord now. 
 
 ## Download the metadata
 * Download metadata files from Huggingface Dataset
@@ -16,7 +15,8 @@ We are waiting for accepting pull request and will notice as soon as it is updat
 
 ## Download the images with img2dataset
 * [img2dataset](https://github.com/rom1504/img2dataset) can easily download and store to [webdataset](https://github.com/webdataset/webdataset) or tfrecord format for large-scale distributed training.
-* Nov 10, 2022 : We are currently using a custom [img2dataset library](https://github.com/justHungryMan/img2dataset). Please see notice.
+  * Nov 10, 2022 : We are currently using a custom [img2dataset library](https://github.com/justHungryMan/img2dataset). Please see notice.
+  * Nov 16  2022 : Official img2dataset library support list of integer of float attribute in tfrecord.
 
 ### Download using Google Cloud Dataproc
 * [Dataproc](https://cloud.google.com/dataproc) is a fully managed and highly scalable service for running Apache Spark and 30+ open source tools. 
