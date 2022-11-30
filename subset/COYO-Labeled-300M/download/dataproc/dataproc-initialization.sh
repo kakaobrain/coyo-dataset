@@ -1,9 +1,9 @@
 #/bin/bash
 
 # Install img2dataset
+pip install img2dataset>=1.34.0
 pip install --upgrade gcsfs
 pip install tensorflow tensorflow_io
-pip install git+https://github.com/justHungryMan/img2dataset
 
 
 
