@@ -16,7 +16,7 @@ Official img2dataset(>=1.34.0) library now support list of integer, float attrib
 ## Download the images with img2dataset
 * [img2dataset](https://github.com/rom1504/img2dataset) can easily download and store to [webdataset](https://github.com/webdataset/webdataset) or tfrecord format for large-scale distributed training.
   * Nov 10, 2022 : We are currently using a custom [img2dataset library](https://github.com/justHungryMan/img2dataset). Please see notice.
-  * Nov 16  2022 : Official img2dataset library now support list of integer, float attribute in tfrecord. We updated the img2dataset package path.
+  * Nov 16  2022 : Official img2dataset(>=1.34.0) library now support list of integer, float attribute in tfrecord. We updated the img2dataset package path.
 
 ### Download using Google Cloud Dataproc
 * [Dataproc](https://cloud.google.com/dataproc) is a fully managed and highly scalable service for running Apache Spark and 30+ open source tools. 
