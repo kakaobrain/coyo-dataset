@@ -1,5 +1,5 @@
 # Notice
-Official img2dataset library now support list of integer, float attribute in tfrecord. 
+Official img2dataset(>=1.34.0) library now support list of integer, float attribute in tfrecord. 
 
 ## Download the metadata
 * Download metadata files from Huggingface Dataset
